@@ -36,7 +36,13 @@
                 <th>{{ contact.last_name}}</th>
                 <th>{{ contact.phone}}</th>
                 <th>{{ contact.email}}</th>
-                <th>{{ contact.pk}}</th>
+                <th>
+                    <a href="{% url 'edit' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">Edit</a>
+                    <a href="{% url 'view' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">View</a>
+                </th>
+                <th>
+                    <a href="{% url 'delete' contact.pk %}" class="text-white bg-red-500 border-2 border-red-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">Delete</a>
+                </th>                
             </tr>
             {% endfor %}
             <br>
@@ -51,6 +57,9 @@
                 <th>
                     <a href="{% url 'edit' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">Edit</a>
                     <a href="{% url 'view' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">View</a>
+                </th>
+                <th>
+                    <a href="{% url 'delete' contact.pk %}" class="text-white bg-red-500 border-2 border-red-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">Delete</a>
                 </th>
             </tr>
             {% endfor %}

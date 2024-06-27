@@ -1,5 +1,59 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-  <h1>New contact Page</h1>
+    <h1 class="max-w-md mx-auto p-4 bg-white shadow-md rounded text-2xl md:text-3xl lg:text-4xl">Add new contact</h1>
+    <div class="border mb-6"></div>
+    <form action="" method="post" class="max-w-md mx-auto p-4 bg-white shadow-md rounded">
+     {% csrf_token %} 
+      <div class="mb-4">
+        <label for="firstname" class="block text-sm font-bold mb-2">First Name:</label>
+        <input type="text" id="firstname" name="firstname" class="w-full p-2 pl-10 text-sm text-gray-700 placeholder-gray-400 border border-gray-300 rounded" required>
+      </div>
+      <div class="mb-4">
+        <label for="lastname" class="block text-sm font-bold mb-2">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" class="w-full p-2 pl-10 text-sm text-gray-700 placeholder-gray-400 border border-gray-300 rounded" required>
+      </div>
+      <div class="mb-4">
+        <label for="phone" class="block text-sm font-bold mb-2">Phone Number:</label>
+        <input type="text" id="phone" name="phone" class="w-full p-2 pl-10 text-sm text-gray-700 placeholder-gray-400 border border-gray-300 rounded" required>
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-bold mb-2">Email:</label>
+        <input type="email" id="email" name="email" class="w-full p-2 pl-10 text-sm text-gray-700 placeholder-gray-400 border border-gray-300 rounded" required>
+      </div>
+      <!-- Add a submit button -->
+      <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Add Contact</button>
+    </form>
+
+    <a href="{% url 'index' %}" class="text-blue-700 underline">Back to contact list</a>
 {% endblock body %}
+
+<!--
+    This styling uses Tailwind's utility-first approach to add styles to the form elements. Here's a breakdown of the classes used:
+
+    *  max-w-md: sets the maximum width of the form to md (medium) size
+    *  mx-auto: centers the form horizontally
+    *  p-4: adds padding to the form
+    *  bg-white: sets the background color of the form to white
+    *  shadow-md: adds a medium-sized shadow to the form
+    *  rounded: adds a rounded corner to the form
+    *  block: sets the display property of the label to block
+    *  text-sm: sets the font size of the label to small
+    *  font-bold: sets the font weight of the label to bold
+    *  mb-2: adds margin-bottom to the label
+    *  w-full: sets the width of the input field to full width
+    *  p-2: adds padding to the input field
+    *  pl-10: adds padding-left to the input field
+    *  text-gray-700: sets the text color of the input field to gray
+    *  placeholder-gray-400: sets the placeholder text color to gray
+    *  border: adds a border to the input field
+    *  border-gray-300: sets the border color to gray
+    *  rounded: adds a rounded corner to the input field
+    *  bg-orange-500: sets the background color of the submit button to orange
+    *  hover:bg-orange-700: sets the background color of the submit button to a darker orange on hover
+    *  text-white: sets the text color of the submit button to white
+    *  font-bold: sets the font weight of the submit button to bold
+    *  py-2: adds padding-top and padding-bottom to the submit button
+    *  px-4: adds padding-left and padding-right to the submit button
+    *  rounded: adds a rounded corner to the submit button
+-->
