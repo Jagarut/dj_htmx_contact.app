@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="flex items-center">
+        <h1 class="mt-4 mb-6 text-2xl leading-none font-bold tracking-tight md:text-3xl lg:text-4xl">Contact List</h1>
+    </div>
+    <div class="border mb-6"></div>
+    <div class="mx-5">
+        <form action="/contacts" method="get">
+            <label for="search" class="block text-sm font-medium leading-6 text-gray-900">Search Term</label>
+            <input id="search" type="text" name="search" class="input input-bordered w-full max-w-xs"/>
+            <input type="submit" value="Search" class="btn"/>
+        </form>
+    </div>
+    <div>
+        <a href="{% url 'new-contact' %}" class="btn btn-lg mx-5 my-4 py-4"> Add Contact</a>
+    </div>
+
+    <br>
+    <div class="overflow-x-auto">
+    <table class="table">
+      <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if found_contacts %}
+            {% for contact in found_contacts %}
+            <tr>
+                <th>{{ contact.first_name }}</th>
+                <th>{{ contact.last_name}}</th>
+                <th>{{ contact.phone}}</th>
+                <th>{{ contact.email}}</th>
+                <th>{{ contact.pk}}</th>
+            </tr>
+            {% endfor %}
+            <br>
+            <a href="{% url 'index' %}">Back to contact list</a>
+        {% else %}
+            {% for contact in contacts %}
+            <tr>
+                <th>{{ contact.first_name }}</th>
+                <th>{{ contact.last_name}}</th>
+                <th>{{ contact.phone}}</th>
+                <th>{{ contact.email}}</th>
+                <th>
+                    <a href="{% url 'edit' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">Edit</a>
+                    <a href="{% url 'view' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">View</a>
+                </th>
+            </tr>
+            {% endfor %}
+        {% endif %}
+      </tbody>   
+</table>
+</div>
+{% endblock body %}
