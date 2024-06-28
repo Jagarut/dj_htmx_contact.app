@@ -5,6 +5,16 @@
         <h1 class="mt-4 mb-6 text-2xl leading-none font-bold tracking-tight md:text-3xl lg:text-4xl">Contact List</h1>
     </div>
     <div class="border mb-6"></div>
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <div class="mx-5">
         <form action="/contacts" method="get">
             <label for="search" class="block text-sm font-medium leading-6 text-gray-900">Search Term</label>

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
+
 from .models import Contact
 
 # Create your views here.
@@ -22,6 +24,7 @@ def edit(request, pk):
         contact.phone = request.POST.get('phone')
         contact.email = request.POST.get('email')
         contact.save()
+        messages.success(request, f'{contact.first_name} {contact.last_name} was successfully updated!')
         return redirect('index')
 
     context = {'contact':contact}
@@ -40,12 +43,15 @@ def new_contact(request):
         lastname = request.POST.get('lastname')
         phone = request.POST.get('phone')
         email = request.POST.get('email')
-        Contact.objects.create(first_name=firstname, last_name=lastname, phone=phone, email=email)
+        contact = Contact.objects.create(first_name=firstname, last_name=lastname, phone=phone, email=email)
         # print(f"{firstname}, {lastname}, {phone}, {email}")
+        messages.success(request, f'{contact.first_name} {contact.last_name} was successfully added to contact list!')
         return redirect('index')
     return render(request, 'contact/new_contact.html')
 
 def delete(request, pk):
+    contact = Contact.objects.get(pk=pk)
     Contact.objects.filter(pk=pk).delete()
 
+    messages.error(request, f'{contact.first_name} {contact.last_name} was successfully deleted!')
     return redirect('index')
