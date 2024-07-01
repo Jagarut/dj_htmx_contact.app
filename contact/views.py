@@ -5,14 +5,14 @@ from .models import Contact
 
 # Create your views here.
 def index(request):
+    query = False
     contacts = Contact.objects.all()
-    found_contacts = ''
     if request.GET:
+        query= True
         search_query = request.GET.get('search')
-        # print(search_query)
-        found_contacts = Contact.objects.filter(first_name__icontains=search_query)
-        # print(found_contacts)
-    context = {'contacts': contacts, 'found_contacts': found_contacts}
+        contacts = Contact.objects.filter(first_name__icontains=search_query)
+
+    context = {'contacts': contacts, 'query': query}
     return render(request, 'contact/index.html', context)
 
 def edit(request, pk):
