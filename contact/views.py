@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.http import HttpResponse
 
 from .models import Contact
 
@@ -55,3 +56,12 @@ def delete(request, pk):
 
     messages.error(request, f'{contact.first_name} {contact.last_name} was successfully deleted!')
     return redirect('index')
+
+def email(request):
+    emails = Contact.objects.all().values_list('email', flat=True)
+    
+    print(request.GET.get('email'))
+    print(emails)
+    if request.GET.get('email') in emails:
+        error = "Correo repetido"
+        return  render(request, 'contact/new_contact.html', {'error':error})

@@ -19,12 +19,18 @@
       </div>
       <div class="mb-4">
         <label for="email" class="block text-sm font-bold mb-2">Email:</label>
-        <input type="email" id="email" name="email" class="w-full p-2 pl-10 text-sm text-gray-700 placeholder-gray-400 border border-gray-300 rounded" required>
+        <input hx-get="{% url 'email' %}"
+               hx-trigger="change" 
+               target="next .error" 
+               type="email" id="email" name="email" class="w-full p-2 pl-10 text-sm text-gray-700 placeholder-gray-400 border border-gray-300 rounded" required>
+        <span class="error">
+            {{ error }}
+        </span>       
       </div>
       <!-- Add a submit button -->
       <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Add Contact</button>
     </form>
-
+    <br>
     <a href="{% url 'index' %}" class="text-blue-700 underline">Back to contact list</a>
 {% endblock body %}
 

@@ -9,3 +9,9 @@ urlpatterns = [
     path('delete/<int:pk>', views.delete, name='delete'),
 
 ]
+
+htmx_url = [
+        path('email/', views.email, name='email'),
+]
+
+urlpatterns += htmx_url
