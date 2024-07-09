@@ -59,9 +59,9 @@ def delete(request, pk):
 
 def email(request):
     emails = Contact.objects.all().values_list('email', flat=True)
-    
-    print(request.GET.get('email'))
-    print(emails)
+
     if request.GET.get('email') in emails:
-        error = "Correo repetido"
-        return  render(request, 'contact/new_contact.html', {'error':error})
+
+        return  HttpResponse("Email is repeated!")
+    
+    
