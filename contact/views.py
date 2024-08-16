@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
+from django.core.paginator import Paginator
+from django.conf import settings
 
 from .models import Contact
 
@@ -8,12 +10,28 @@ from .models import Contact
 def index(request):
     query = False
     contacts = Contact.objects.all()
-    if request.GET:
+     
+    paginator = Paginator(contacts, settings.PAGE_SIZE)
+
+
+    page_number = int(request.GET.get('page', 1))
+    contacts = paginator.page(page_number)
+
+    print("page_number:", page_number)
+    print(contacts.object_list)
+
+    
+    if request.GET.get('search') != None:
         query= True
         search_query = request.GET.get('search')
         contacts = Contact.objects.filter(first_name__icontains=search_query)
 
-    context = {'contacts': contacts, 'query': query}
+    context = {'contacts': contacts, 'query': query, 'page': page_number}
+
+    if request.htmx:
+        print('htmx')
+        return render(request, 'contact/partials/contact_list.html', context)
+    
     return render(request, 'contact/index.html', context)
 
 def edit(request, pk):
@@ -64,4 +82,24 @@ def email(request):
 
         return  HttpResponse("Email is repeated!")
     
+    else:
+       return  HttpResponse("") 
     
+# def get_contacts(request):
+#     contacts = Contact.objects.all()
+    
+#     paginator = Paginator(contacts, settings.PAGE_SIZE) 
+#     page_number = int(request.GET.get('page', 1))
+#     contacts = paginator.page(page_number)
+
+
+#     context = {
+#         'contacts': contacts,
+#         'page_number': page_number,
+#     }
+
+#     if request.htmx:
+#         print('htmx')
+#         return render(request, 'contact/partials/contact_list.html', context)
+    
+#     return render(request, 'contact/index.html', context)

@@ -13,3 +13,6 @@ class Contact(models.Model):
 
     def __str__(self) -> str:
         return self.first_name
+    
+    class Meta:
+        ordering = ['last_name']
