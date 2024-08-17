@@ -12,24 +12,22 @@ def index(request):
     contacts = Contact.objects.all()
      
     paginator = Paginator(contacts, settings.PAGE_SIZE)
-
-
     page_number = int(request.GET.get('page', 1))
     contacts = paginator.page(page_number)
-
-    print("page_number:", page_number)
-    print(contacts.object_list)
-
     
     if request.GET.get('search') != None:
         query= True
         search_query = request.GET.get('search')
         contacts = Contact.objects.filter(first_name__icontains=search_query)
-
+        
     context = {'contacts': contacts, 'query': query, 'page': page_number}
 
+    if query:
+        return render(request, 'contact/index.html', context)
+    
     if request.htmx:
         print('htmx')
+        
         return render(request, 'contact/partials/contact_list.html', context)
     
     return render(request, 'contact/index.html', context)

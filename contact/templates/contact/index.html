@@ -21,11 +21,7 @@
     {% if not query %}
       
     <div class="mx-5">
-        <form action="/contacts" method="get">
-            <label for="search" class="block text-sm font-medium leading-6 text-gray-900">Search Term</label>
-            <input id="search" type="text" name="search" class="input input-bordered w-full max-w-xs"/>
-            <input type="submit" value="Search" class="btn"/>
-        </form>
+        {% include "contact/partials/search_form.html" %}
     </div>
     <div>
         <a href="{% url 'new-contact' %}" class="btn btn-lg mx-5 my-4 py-4"> Add Contact</a>
