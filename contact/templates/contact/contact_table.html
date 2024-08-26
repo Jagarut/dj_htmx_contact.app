@@ -1,4 +1,5 @@
     <table class="table">
+    {% include "contact/messages.html" %}
       <thead>
         <tr>
             <th>First Name</th>
@@ -25,7 +26,7 @@
                         hx-delete="{% url 'delete' contact.pk %}" 
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-push-url="true"
-                        hx-target="body"
+                        hx-target="#contact-list"
                         hx-confirm="Are you sure you want to delete this contact?"
                         class="text-white bg-red-500 border-2 border-red-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">
                         Delete

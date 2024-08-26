@@ -1,16 +1,28 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<div id="todo">
     <div class="flex items-center">
-            <h1 class="mt-4 mb-6 text-2xl leading-none font-bold tracking-tight md:text-3xl lg:text-4xl">Contact List</h1>
+            <h1 class="mt-4 mb-6 text-2xl leading-none font-bold tracking-tight md:text-3xl lg:text-4xl">Search results</h1>
     </div>
-
     <div class="border mb-6"></div>
-      
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
     <div class="mx-5">
         {% include "contact/partials/search_form.html" %}
     </div>
+    
+
+    
+      
     
     <div>
         <a href="{% url 'new-contact' %}" class="btn btn-lg mx-5 my-4 py-4"> Add Contact</a>

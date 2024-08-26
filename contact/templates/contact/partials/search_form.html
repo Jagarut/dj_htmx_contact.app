@@ -1,5 +1,11 @@
-<form action="/contacts" method="get">
+<form action="/search" method="get">
     <label for="search" class="block text-sm font-medium leading-6 text-gray-900">Search Term</label>
-    <input id="search" type="text" name="search" class="input input-bordered w-full max-w-xs"/>
+    <input id="search" type="text" name="search" class="input input-bordered w-full max-w-xs"
+        hx-get="{% url 'search' %}"
+        hx-trigger="search, keyup delay:200ms changed load"
+        value="{{ query }}"
+        hx-target="body"
+        hx-push-url="{% url 'search' %}"
+        />
     <input type="submit" value="Search" class="btn"/>
 </form>

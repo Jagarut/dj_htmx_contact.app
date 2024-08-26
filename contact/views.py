@@ -8,29 +8,31 @@ from .models import Contact
 
 # Create your views here.
 def index(request):
-    query = False
+    
     contacts = Contact.objects.all()
      
     paginator = Paginator(contacts, settings.PAGE_SIZE)
     page_number = int(request.GET.get('page', 1))
-    contacts = paginator.page(page_number)
-    
-    if request.GET.get('search') != None:
-        query= True
-        search_query = request.GET.get('search')
-        contacts = Contact.objects.filter(first_name__icontains=search_query)
+    contacts = paginator.page(page_number)  
         
-    context = {'contacts': contacts, 'query': query, 'page': page_number}
-
-    if query:
-        return render(request, 'contact/index.html', context)
+    context = {'contacts': contacts, 'page': page_number}
     
     if request.htmx:
-        print('htmx')
-        
         return render(request, 'contact/partials/contact_list.html', context)
     
     return render(request, 'contact/index.html', context)
+
+def search(request):
+    
+    query = request.GET.get('search', '')
+
+    contacts = Contact.objects.filter(first_name__icontains=query)
+    context = {'contacts': contacts, 'query': query}
+    
+    if request.htmx:
+        return render(request, 'contact/search.html', context)
+
+    return render(request, 'contact/search.html', context)
 
 def edit(request, pk):
     contact = Contact.objects.get(id=pk)
@@ -61,7 +63,7 @@ def new_contact(request):
         phone = request.POST.get('phone')
         email = request.POST.get('email')
         contact = Contact.objects.create(first_name=firstname, last_name=lastname, phone=phone, email=email)
-        # print(f"{firstname}, {lastname}, {phone}, {email}")
+        
         messages.success(request, f'{contact.first_name} {contact.last_name} was successfully added to contact list!')
         return redirect('index')
     return render(request, 'contact/new_contact.html')
