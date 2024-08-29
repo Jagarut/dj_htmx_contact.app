@@ -15,7 +15,7 @@ def index(request):
     page_number = int(request.GET.get('page', 1))
     contacts = paginator.page(page_number)  
         
-    context = {'contacts': contacts, 'page': page_number}
+    context = {'contacts': contacts, 'page': page_number, 'title': 'Contact List'}
     
     if request.htmx:
         return render(request, 'contact/partials/contact_list.html', context)
@@ -27,10 +27,14 @@ def search(request):
     query = request.GET.get('search', '')
 
     contacts = Contact.objects.filter(first_name__icontains=query)
-    context = {'contacts': contacts, 'query': query}
-    
-    if request.htmx:
-        return render(request, 'contact/search.html', context)
+    context = {'contacts': contacts, 'query': query, 'title': 'Search Results'}
+    # print('query', len(query))
+
+    if request.headers.get('HX-Trigger') == 'search':
+        if len(query) > 1:
+            # print('search')
+            # print(query)
+            return render(request, 'contact/partials/table_rows.html', context)
 
     return render(request, 'contact/search.html', context)
 
@@ -85,21 +89,3 @@ def email(request):
     else:
        return  HttpResponse("") 
     
-# def get_contacts(request):
-#     contacts = Contact.objects.all()
-    
-#     paginator = Paginator(contacts, settings.PAGE_SIZE) 
-#     page_number = int(request.GET.get('page', 1))
-#     contacts = paginator.page(page_number)
-
-
-#     context = {
-#         'contacts': contacts,
-#         'page_number': page_number,
-#     }
-
-#     if request.htmx:
-#         print('htmx')
-#         return render(request, 'contact/partials/contact_list.html', context)
-    
-#     return render(request, 'contact/index.html', context)
