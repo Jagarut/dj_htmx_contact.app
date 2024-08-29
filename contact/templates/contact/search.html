@@ -15,14 +15,9 @@
     </div>
     {% endif %}
 
-
     <div class="mx-5">
         {% include "contact/partials/search_form.html" %}
     </div>
-    
-
-    
-      
     
     <div>
         <a href="{% url 'new-contact' %}" class="btn btn-lg mx-5 my-4 py-4"> Add Contact</a>
@@ -32,10 +27,7 @@
     <br>
     <div class="overflow-x-auto">
         
-
-    <div id="contact-list">
-        {% include "contact/partials/contact_list.html" %}
-    </div>
+    {% include "contact/contact_table.html" %}
     
 
     {% if query %}

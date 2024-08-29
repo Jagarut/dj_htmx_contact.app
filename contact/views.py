@@ -23,15 +23,18 @@ def index(request):
     return render(request, 'contact/index.html', context)
 
 def search(request):
-    
     query = request.GET.get('search', '')
 
     contacts = Contact.objects.filter(first_name__icontains=query)
     context = {'contacts': contacts, 'query': query, 'title': 'Search Results'}
-    # print('query', len(query))
+
+    rendering = request.headers.get('myHeader') == 'xxx'
+
+    print(request.headers.get('HX-Trigger') == 'search')
+    print(len(query))
 
     if request.headers.get('HX-Trigger') == 'search':
-        if len(query) > 1:
+        if len(query) > 1 or rendering:
             # print('search')
             # print(query)
             return render(request, 'contact/partials/table_rows.html', context)

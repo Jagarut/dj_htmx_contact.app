@@ -1,4 +1,4 @@
-<div id="contact-list">
+
     {% include "contact/contact_table.html" %}
     <div>
         {% if contacts.has_previous %}
@@ -21,4 +21,3 @@
         <span>Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}</span>
     </div>
     {% endif %}
-</div>

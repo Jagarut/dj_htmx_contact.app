@@ -13,7 +13,6 @@ urlpatterns = [
 
 htmx_url = [
         path('email/', views.email, name='email'),
-        # path('get-contacts/', views.get_contacts, name='get_contacts'),
 
 ]
 
