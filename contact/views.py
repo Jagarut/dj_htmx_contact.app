@@ -34,7 +34,7 @@ def search(request):
     print(len(query))
 
     if request.headers.get('HX-Trigger') == 'search':
-        if len(query) > 1 or rendering:
+        if  rendering:
             # print('search')
             # print(query)
             return render(request, 'contact/partials/table_rows.html', context)
