@@ -10,7 +10,7 @@ from .models import Contact
 def index(request):
     
     contacts = Contact.objects.all()
-     
+
     paginator = Paginator(contacts, settings.PAGE_SIZE)
     page_number = int(request.GET.get('page', 1))
     contacts = paginator.page(page_number)  
@@ -21,6 +21,10 @@ def index(request):
         return render(request, 'contact/partials/contact_list.html', context)
     
     return render(request, 'contact/index.html', context)
+
+def contact_count(request):
+    count = Contact.objects.count()
+    return HttpResponse("(" + str(count) + " total Contacts)")
 
 def search(request):
     query = request.GET.get('search', '')

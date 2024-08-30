@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<div id="todo">
+<br id="todo">
     <div class="flex items-center">
             <h1 class="mt-4 mb-6 text-2xl leading-none font-bold tracking-tight md:text-3xl lg:text-4xl">{{ title }}</h1>
     </div>
@@ -15,21 +15,22 @@
     <div>
         <a href="{% url 'new-contact' %}" class="btn btn-lg mx-5 my-4 py-4"> Add Contact</a>
     </div>
-    
-
     <br>
     <div class="overflow-x-auto">
-        
-
-    <div id="contact-list">
-        {% include "contact/partials/contact_list.html" %}
+        <div id="contact-list">
+            {% include "contact/partials/contact_list.html" %}
+        </div>
+    </div>
+    </br>
+    <div class="border mb-6"></div>
+    <div class="flex items-center justify-center">
+        <p>
+            <a class="btn btn-lg bg-green-200 hover:text-white mx-5 my-4 py-4" href="{% url 'new-contact' %}">Add Contact</a> 
+              <span hx-get="{% url 'contact_count' %}"
+                    hx-trigger="load"></span> 
+        </p>
     </div>
     
-
-    {% if query %}
-        <br>
-        <a href="{% url 'index' %}" class="text-blue-700 underline">Back to contact list</a>
-    {% endif %}
 
 
 </div>
