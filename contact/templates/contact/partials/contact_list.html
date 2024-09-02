@@ -1,23 +1,29 @@
 
-    {% include "contact/contact_table.html" %}
-    <div>
+    <div id="contact-list">
+        {% include "contact/contact_table.html" %}
+    
         {% if contacts.has_previous %}
             <button class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800" 
                     hx-get="{% url 'index' %}?page={{ page|add:-1 }}" 
-                    hx-swap="outerHTML" hx-target="#contact-list" 
-                    hx-trigger="click" {% if not contacts.has_previous %}disabled{% endif %}>
+                    hx-swap="outerHTML" 
+                    hx-target="#contact-list" 
+                    hx-push-url="true"
+                    >
             Previous</button>
         {% endif %}
         {% if contacts.has_next %}
             <button class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800"
                     hx-get="{% url 'index' %}?page={{ page|add:1 }}" 
-                    hx-swap="outerHTML" hx-target="#contact-list" 
-                    hx-trigger="click" {% if not contacts.has_next %}disabled{% endif %}>
+                    hx-swap="outerHTML" 
+                    hx-target="#contact-list" 
+                    hx-push-url="true"
+                    >
             Next</button>
         {% endif %}
-    </div>
-    {% if contacts.number %}
-    <div>
-        <span>Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}</span>
+    
+        {% if contacts.number %}
+        <div>
+            <span>Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}</span>
+        </div>
     </div>
     {% endif %}

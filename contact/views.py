@@ -34,8 +34,8 @@ def search(request):
 
     rendering = request.headers.get('myHeader') == 'xxx'
 
-    print(request.headers.get('HX-Trigger') == 'search')
-    print(len(query))
+    # print(request.headers.get('HX-Trigger') == 'search')
+    # print(len(query))
 
     if request.headers.get('HX-Trigger') == 'search':
         if  rendering:

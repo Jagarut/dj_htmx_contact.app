@@ -1,3 +1,4 @@
+{% load static %}
 <form id="my-form" action="{% url 'search' %}" method="get">
     <label for="search" class="block text-sm font-medium leading-6 text-gray-900">Search Term</label>
     <input id="search" type="search" name="search" class="input input-bordered w-full max-w-xs"
@@ -9,14 +10,17 @@
         {% endif %}
         hx-trigger="search, keyup delay:200ms changed load"
         value="{{ query }}"
-        hx-push-url="true"
+        
         {% if query|length > 0 %}
             hx-target="tbody"
         {% else %}
             hx-target="body"
         {% endif %}
-    />
+        hx-indicator="#spinner"/>
     <input type="submit" value="Search" class="btn"/>
+    <img id="spinner" class="htmx-indicator"
+        src="{% static 'images/spinning_circle.svg' %}"
+        alt="Request In Flight..."/>
 </form>
 
 
