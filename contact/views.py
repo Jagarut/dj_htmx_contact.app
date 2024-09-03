@@ -83,8 +83,12 @@ def delete(request, pk):
     contact = Contact.objects.get(pk=pk)
     Contact.objects.filter(pk=pk).delete()
 
-    messages.error(request, f'{contact.first_name} {contact.last_name} was successfully deleted!')
-    return redirect('index')
+    if request.headers.get('HX-Trigger') == 'inline-delete-btn':
+        return HttpResponse("")
+    else:
+        messages.error(request, f'{contact.first_name} {contact.last_name} was successfully deleted!')
+        return redirect('index')
+
 
 def email(request):
     emails = Contact.objects.all().values_list('email', flat=True)

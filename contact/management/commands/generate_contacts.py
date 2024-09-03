@@ -32,7 +32,7 @@ class Command(BaseCommand):
             {'first_name': 'William', 'last_name': 'Jackson', 'email': 'william.jackson@example.com', 'phone_number': '555-555-1112'},
         ]
         
-        for field in people[:4]:
+        for field in people:
             Contact.objects.get_or_create(first_name=field['first_name'], 
                                           last_name=field['last_name'], 
                                           phone=field['phone_number'],

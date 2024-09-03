@@ -128,4 +128,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'contact.User'
 
-PAGE_SIZE = 4
+PAGE_SIZE = 5
