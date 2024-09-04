@@ -90,7 +90,7 @@ def delete(request, pk):
 @require_http_methods(["POST"])  
 def delete_all(request):
     contact_ids = request.POST.getlist('selected_contact_ids')
-    print(contact_ids)
+    
     if not contact_ids:
         return HttpResponseBadRequest("No items selected for deletion.")
     
