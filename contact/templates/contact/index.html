@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body %}
-<br id="todo">
+<div id="todo">
     <div class="flex items-center">
             <h1 class="mt-4 mb-6 text-2xl leading-none font-bold tracking-tight md:text-3xl lg:text-4xl">{{ title }}</h1>
     </div>
@@ -18,11 +18,10 @@
     </div>
     <br>
     <div class="overflow-x-auto">
-        <div>
+        <div id="contacts-container">
             {% include "contact/partials/contact_list.html" %}
         </div>
     </div>
-    </br>
     <div class="border mb-6"></div>
     <div class="flex items-center justify-center">
         <p>

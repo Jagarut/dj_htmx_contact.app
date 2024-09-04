@@ -1,15 +1,26 @@
-    <table class="table">
     {% include "contact/messages.html" %}
-      <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% include "contact/partials/table_rows.html" %}
-      </tbody>   
-    </table>
+    <form action="{% url 'delete_all' %}" method="post">
+        {% csrf_token %}
+        <table class="table">
+          <thead>
+            <tr class="text-black text-base">
+                <th></th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% include "contact/partials/table_rows.html" %}
+          </tbody>   
+          <div>
+            <button type="submit" class="text-white bg-red-500 border-2 border-red-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800"   
+                id="delete-form" 
+                >
+              Delete Selected Contacts
+            </button>
+        </div>
+        </table>
+    </form>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.core.paginator import Paginator
 from django.conf import settings
 
@@ -33,9 +34,6 @@ def search(request):
     context = {'contacts': contacts, 'query': query, 'title': 'Search Results'}
 
     rendering = request.headers.get('myHeader') == 'xxx'
-
-    # print(request.headers.get('HX-Trigger') == 'search')
-    # print(len(query))
 
     if request.headers.get('HX-Trigger') == 'search':
         if  rendering:
@@ -88,6 +86,19 @@ def delete(request, pk):
     else:
         messages.error(request, f'{contact.first_name} {contact.last_name} was successfully deleted!')
         return redirect('index')
+
+@require_http_methods(["POST"])  
+def delete_all(request):
+    contact_ids = request.POST.getlist('selected_contact_ids')
+    print(contact_ids)
+    if not contact_ids:
+        return HttpResponseBadRequest("No items selected for deletion.")
+    
+    Contact.objects.filter(id__in=contact_ids).delete()
+    messages.error(request, "Deleted Contacts!")
+    return redirect('index')
+    
+    
 
 
 def email(request):
