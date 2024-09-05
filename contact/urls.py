@@ -10,8 +10,8 @@ urlpatterns = [
     path('new-contact/', views.new_contact, name='new-contact'),
     path('delete/', views.delete_all, name='delete_all'),
     path('delete/<int:pk>', views.delete, name='delete'),
-
-
+    path('contacts/archive', views.archive, name='archive'),
+    path('contacts/archive_content', views.archive_content, name='content'),
 ]
 
 htmx_url = [

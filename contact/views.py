@@ -1,12 +1,14 @@
+import json
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.core.paginator import Paginator
 from django.conf import settings
+from django.core import serializers
 
 from .models import Contact
-
+from .utils import Archiver
 # Create your views here.
 def index(request):
     
@@ -16,7 +18,12 @@ def index(request):
     page_number = int(request.GET.get('page', 1))
     contacts = paginator.page(page_number)  
         
-    context = {'contacts': contacts, 'page': page_number, 'title': 'Contact List'}
+    context = {
+        'contacts': contacts, 
+        'page': page_number, 
+        'title': 'Contact List',
+        'archiver': Archiver.get(),
+    }
     
     if request.htmx:
         return render(request, 'contact/partials/contact_list.html', context)
@@ -97,8 +104,6 @@ def delete_all(request):
     Contact.objects.filter(id__in=contact_ids).delete()
     messages.error(request, "Deleted Contacts!")
     return redirect('index')
-    
-    
 
 
 def email(request):
@@ -111,3 +116,40 @@ def email(request):
     else:
        return  HttpResponse("") 
     
+@require_http_methods(["GET", "POST", "DELETE"]) 
+def archive(request):
+    archiver = Archiver.get()
+    
+    if request.method == "POST":
+        archiver.run()
+    
+    bar_progress = archiver.progress() * 100
+
+    if request.method == "DELETE":
+        archiver.reset()
+
+    context = {
+        'archiver': archiver,
+        'bar_progress': bar_progress
+    }
+        
+    return render(request, 'contact/partials/archive_ui.html', context)
+    
+
+def archive_content(request):
+   contacts = Contact.objects.all()
+   # Serialize the queryset to JSON
+   json_data = serializers.serialize('json', contacts)
+
+   # Convert the serialized data back into a Python object
+   data = json.loads(json_data)  
+
+   # Pretty-print the JSON with indentations
+   pretty_json_data = json.dumps(data, indent=4)     
+
+   # Return the pretty-printed JSON as a downloadable file
+   response = HttpResponse(pretty_json_data, content_type='application/json')
+
+   response['Content-Disposition'] = 'attachment; filename="persons_pretty.json"'  
+   
+   return response
