@@ -1,3 +1,5 @@
+{% load static %}
+<script src="{% static 'js/table/overflow_menu.js' %}"></script>
 <style>
     tr.htmx-swapping { 
       opacity: 0; 
@@ -5,16 +7,24 @@
     }
 </style>
 
+
+
 {% for contact in contacts %}
 <tr>
-    <td><input type="checkbox" name="selected_contact_ids" value="{{ contact.id }}">
+    <td><input type="checkbox" name="selected_contact_ids" value="{{ contact.id }}" x-model="selected">
     <td>{{ contact.first_name }}</td>
     <td>{{ contact.last_name}}</td>
     <td>{{ contact.phone}}</td>
     <td>{{ contact.email}}</td>
     <td>
-        <a href="{% url 'edit' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">Edit</a>
-        <a href="{% url 'view' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">View</a>
+        <a role="menuitem"
+           href="{% url 'edit' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">
+           Edit
+        </a> 
+        <a role="menuitem" 
+           href="{% url 'view' contact.pk %}" class="text-green-500 bg-white border-2 border-green-500 rounded px-2 py-1 text-sm hover:bg-gray-200 hover:text-gray-800">
+           View
+        </a>
     </td>
     <td>
         <button id="inline-delete-btn"

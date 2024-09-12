@@ -38,4 +38,28 @@
 
 </div>
 
+<section class="counter" data-counter>
+  <output id="my-output" data-counter-output>0</output>  
+  <button class="increment-btn btn btn-lg bg-red-200 hover:text-white mx-5 my-4 py-4" data-counter-increment>Increment</button>
+  <button class="decrement-btn btn btn-lg bg-blue-200 hover:text-white mx-5 my-4 py-4" data-counter-decrement>Decrement</button>
+</section>
+<section class="counter" data-counter>
+  <output id="tu-output" data-counter-output>0</output>  
+  <button class="increment-btn btn btn-lg bg-red-200 hover:text-white mx-5 my-4 py-4" data-counter-increment>Increment</button>
+  <button class="decrement-btn btn btn-lg bg-blue-200 hover:text-white mx-5 my-4 py-4" data-counter-decrement>Decrement</button>
+</section>
+<section class="counter" data-counter>
+  <output id="su-output" data-counter-output>0</output>  
+  <button class="increment-btn btn btn-lg bg-red-200 hover:text-white mx-5 my-4 py-4" data-counter-increment>Increment</button>
+  <button class="decrement-btn btn btn-lg bg-blue-200 hover:text-white mx-5 my-4 py-4" data-counter-decrement>Decrement</button>
+</section>
+
+<script src="{% static 'js/index/counter.js' %}"></script>
+
+<div class="flex justify-center"><h2 class="text-3xl underline">Alpine Counters</h2></div>
+<div class="counter" x-data="{ count: 0 }">
+    <output x-text="count"></output>
+    <button class="btn btn-lg bg-yellow-200 hover:text-white mx-5 my-2 py-2" x-on:click="count++">Increment</button>
+    <button class="btn btn-lg bg-yellow-200 hover:text-white mx-5 my-2 py-2" x-on:click="count--">Decrement</button>
+</div>
 {% endblock body %}
